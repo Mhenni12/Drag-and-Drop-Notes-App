@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import Trash from "../icons/Trash";
-import { setNewOffset } from "../utils";
+import { setNewOffset, autoGrow } from "../utils";
 
 const NoteCard = ({ note }) => {
   const body = JSON.parse(note.body);
@@ -13,13 +13,6 @@ const NoteCard = ({ note }) => {
   const mouseStartPos = useRef({ x: 0, y: 0 });
 
   const cardRef = useRef(null);
-
-  // Auto-grow effect for the textarea to get rid of scrollbar
-  function autoGrow(textAreaRef) {
-    const { current } = textAreaRef;
-    current.style.height = "auto"; // Reset the height
-    current.style.height = current.scrollHeight + "px"; // Set the new height
-  }
 
   // Adjust textarea height on component mount
   useEffect(() => {
