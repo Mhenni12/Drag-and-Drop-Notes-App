@@ -1,10 +1,11 @@
 import { useRef, useEffect, useState } from "react";
 import Trash from "../icons/Trash";
+import { setNewOffset } from "../utils";
 
 const NoteCard = ({ note }) => {
   const body = JSON.parse(note.body);
   // Use state to manage position for drag-and-drop functionality
-  const [position, setPositon] = useState(JSON.parse(note.position));
+  const [position, setPosition] = useState(JSON.parse(note.position));
   const colors = JSON.parse(note.colors);
 
   const textAreaRef = useRef(null);
@@ -48,10 +49,8 @@ const NoteCard = ({ note }) => {
     mouseStartPos.current.y = e.clientY;
 
     //3 - Update card top and left position.
-    setPositon({
-      x: cardRef.current.offsetLeft - mouseMoveDir.x,
-      y: cardRef.current.offsetTop - mouseMoveDir.y,
-    });
+    const newPosition = setNewOffset(cardRef.current, mouseMoveDir);
+    setPosition(newPosition);
   };
 
   const mouseUp = () => {
